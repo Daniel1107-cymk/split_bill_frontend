@@ -1,0 +1,12 @@
+{
+  "name": "SplitBill",
+  "displayName": "SplitBill",
+  "expo": {
+    "name": "SplitBill",
+    "slug": "SplitBill",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
