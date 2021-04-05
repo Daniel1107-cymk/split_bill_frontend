@@ -42,7 +42,10 @@ const Login = ({ navigation }) => {
         const { access_token, expires_in } = result.data.data;
         Token.save(access_token, expires_in);
 
-        navigation.navigate("Home");
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
     }
 
     const errorHandler = (type) => {
