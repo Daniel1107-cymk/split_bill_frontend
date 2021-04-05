@@ -39,8 +39,8 @@ const Login = ({ navigation }) => {
             }
         }
         reset();
-        const { access_token, expire_in } = result.data.data;
-        Token.save(access_token, expire_in);
+        const { access_token, expires_in } = result.data.data;
+        Token.save(access_token, expires_in);
 
         navigation.navigate("Home");
     }
