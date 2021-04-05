@@ -22,8 +22,13 @@ export const errorHandler = (error) => {
             break;
         case 404:
             // do something when you're unauthorized to access a resource
-            console.log("unauthorized", error);
-            break;
+            showToast("You are not authorized, please login!");
+            return {
+                success: false,
+                data: data,
+                redirect: true,
+                status: 401,
+            }
         case 422:
             return {
                 success: false,
