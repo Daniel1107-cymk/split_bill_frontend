@@ -1,20 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class Token {
-    static save(token, expire) {
+    static async save(token, expire) {
         const tokenExpired = Date.now() + expire * 1000;
-        AsyncStorage.setItem("token", token);
-        AsyncStorage.setItem("token_expired", tokenExpired.toString());
+        await AsyncStorage.setItem("token", token);
+        await AsyncStorage.setItem("token_expired", tokenExpired);
     }
   
-    static isExpired() {
+    static async isExpired() {
         const currentTime = Date.now();
-        const tokenExpired = AsyncStorage.getItem("token_expired");
-        return +currentTime >= +tokenExpired.toInt();
+        const tokenExpired = await AsyncStorage.getItem("token_expired");
     }
   
-    static removeToken() {
-        AsyncStorage.removeItem("token");
-        AsyncStorage.removeItem("token_expired");
+    static async removeToken() {
+        await AsyncStorage.removeItem("token");
+        await AsyncStorage.removeItem("token_expired");
     }
   }
