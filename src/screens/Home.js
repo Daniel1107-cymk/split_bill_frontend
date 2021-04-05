@@ -7,9 +7,11 @@ const Home = ({ navigation }) => {
 
     const CheckToken = async () => {
         if(await Token.isExpired()) {
-            navigation.navigate('Login');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
         }
-        console.log(await Token.isExpired())
     }
 
     useEffect(() => {
