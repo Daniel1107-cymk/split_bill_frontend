@@ -5,10 +5,15 @@ import Token from '../helpers/tokenHandler';
 
 const Home = ({ navigation }) => {
 
-    useEffect(() => {
-        if(Token.isExpired() === true) {
+    const CheckToken = async () => {
+        if(await Token.isExpired()) {
             navigation.navigate('Login');
         }
+        console.log(await Token.isExpired())
+    }
+
+    useEffect(() => {
+        CheckToken();
     }, []);
 
     return (
