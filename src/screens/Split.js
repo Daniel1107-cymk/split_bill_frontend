@@ -5,24 +5,8 @@ import {
     Text,
     View,
 } from 'react-native';
-// helper
-import Token from '../helpers/tokenHandler';
 
-const Home = ({ navigation }) => {
-
-    const CheckToken = async () => {
-        if(await Token.isExpired()) {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
-            });
-        }
-    }
-
-    useEffect(() => {
-        CheckToken();
-    }, []);
-
+const Split = () => {
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.bannerSection}>
@@ -37,17 +21,17 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     bannerSection: {
-        flex: 2,
+        flex: 1,
         backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',
     },
     listSection: {
-        flex: 3,
+        flex: 5,
         backgroundColor: 'green',
         justifyContent: 'center',
         alignItems: 'center',
     }
 })
 
-export default Home;
+export default Split;
