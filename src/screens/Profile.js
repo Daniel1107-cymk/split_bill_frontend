@@ -1,37 +1,165 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
+    ScrollView,
     StyleSheet,
     Text,
+    TouchableOpacity,
     View,
 } from 'react-native';
+// helper
+import Token from '../helpers/tokenHandler';
+import * as API from '../helpers/network';
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+    const [userData, setUserData] = useState(null);
+    const [billData, setBillData] = useState([]);
+
+    const getProfileData = async () => {
+        const result = await API.get('me');
+        if(result.success) {
+            setUserData(result.data.data);
+        }
+    }
+
+    const getBillData = async () => {
+        const result = await API.get('bill');
+        if(result.success) {
+            setBillData(result.data.data);
+        }
+    }
+
+    const Logout = async () => {
+        await Token.removeToken();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        });
+    }
+
+    useEffect(() => {
+        getProfileData();
+        getBillData();
+        // eslint-disable-next-line
+    }, [])
+
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View style={styles.headerSection}>
-                <Text>Profile Section</Text>
+        <SafeAreaView style={{flex: 1, padding: 20,}}>
+            <View style={styles.profileSection}>
+                <View style={{flex: 1.3}}>
+                    <View style={styles.profilePicture} />
+                </View>
+                <View style={styles.profileDetailContainer}>
+                    <View style={{width: '100%'}}>
+                        {userData !== null &&
+                            <>
+                                <Text style={{fontSize: 20}}>{userData.full_name}</Text>
+                                <Text>{userData.email}</Text>
+                            </>
+                        }
+                    </View>
+                    <TouchableOpacity
+                        onPress={Logout}
+                        style={styles.logoutButton}
+                    >
+                        <Text style={styles.logoutText}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={styles.historySection}>
-                <Text>History Section</Text>
-            </View>
+            <Text style={styles.title}>History</Text>
+            {billData.length > 0
+                    ? (
+                        <ScrollView style={styles.historySection}>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                            <View style={styles.historyDetailContainer}>
+                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                            </View>
+                        </ScrollView>
+                        ) 
+                    : (
+                        <View style={styles.emptyHistorySection}>
+                            <Text>No History</Text>
+                        </View>
+                    )
+                }
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    headerSection: {
-        flex: 1,
-        backgroundColor: 'blue',
-        justifyContent: 'center',
+    title: {
+        marginTop: 20,
+        marginBottom: 10,
+        fontSize: 24,
+    },
+    profileSection: {
+        height: '20%',
+        padding: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        backgroundColor: 'white',
         alignItems: 'center',
     },
-    historySection: {
+    profilePicture: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'gray',
+        borderRadius: 5,
+    },
+    profileDetailContainer: {
         flex: 3,
-        backgroundColor: 'green',
+        padding: 10,
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+    },
+    emptyHistorySection: {
+        flex: 3,
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+        borderRadius: 5,
+        backgroundColor: 'white',
+    },
+    historySection: {
+        height: '80%',
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        backgroundColor: 'white',
+    },
+    historyDetailContainer: {
+        height: 100,
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: 'gray',
+    },
+    logoutButton: {
+        backgroundColor: '#03befc',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 70,
+        height: 40,
+        borderRadius: 5,
+    },
+    logoutText: {
+        color: 'white',
+    },
 })
 
 export default Profile;
