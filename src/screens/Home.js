@@ -9,7 +9,6 @@ import {
 import Token from '../helpers/tokenHandler';
 
 const Home = ({ navigation }) => {
-
     const CheckToken = async () => {
         if(await Token.isExpired()) {
             navigation.reset({
@@ -24,7 +23,7 @@ const Home = ({ navigation }) => {
     }, []);
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, padding: 20}}>
             <View style={styles.bannerSection}>
                 <Text>Banner Section</Text>
             </View>
@@ -38,13 +37,16 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
     bannerSection: {
         flex: 2,
-        backgroundColor: 'blue',
+        padding: 10,
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
     },
     listSection: {
         flex: 3,
-        backgroundColor: 'green',
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
     }
