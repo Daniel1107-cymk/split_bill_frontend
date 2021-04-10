@@ -41,11 +41,12 @@ const Login = ({ navigation }) => {
         reset();
         const { access_token, expires_in } = result.data.data;
         Token.save(access_token, expires_in);
-
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Home' }],
-        });
+        setTimeout(() => {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+        }, 0);
     }
 
     const errorHandler = (type) => {
