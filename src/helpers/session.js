@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class Session {
     static getValue = async (key) => {
         try {
-            return await AsyncStorage.getValue(key);
+            return await AsyncStorage.getItem(key);
         } catch (error) {
             return null;
         }
