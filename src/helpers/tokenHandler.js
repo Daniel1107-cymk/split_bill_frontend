@@ -10,7 +10,10 @@ export default class Token {
     static async isExpired() {
         const currentTime = Date.now();
         const tokenExpired = await AsyncStorage.getItem("token_expired");
-        return +currentTime >= +tokenExpired;
+        if(tokenExpired === null) {
+            return true
+        };
+        return (+currentTime >= +tokenExpired);
     }
   
     static async removeToken() {
