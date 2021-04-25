@@ -10,6 +10,8 @@ import {
 // helper
 import Token from '../helpers/tokenHandler';
 import * as API from '../helpers/network';
+//icon
+import IonIcons from '@expo/vector-icons/Ionicons';
 
 const Profile = ({ navigation }) => {
     const [userData, setUserData] = useState(null);
@@ -47,7 +49,7 @@ const Profile = ({ navigation }) => {
         <SafeAreaView style={{flex: 1, padding: 20,}}>
             <View style={styles.profileSection}>
                 <View style={{flex: 1.3}}>
-                    <View style={styles.profilePicture} />
+                    <IonIcons name={"person-circle-outline"} color="#000" size={100} style={styles.profilePicture} />
                 </View>
                 <View style={styles.profileDetailContainer}>
                     <View style={{width: '100%'}}>
@@ -115,9 +117,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     profilePicture: {
-        width: 100,
-        height: 100,
-        backgroundColor: 'gray',
+        width: '100%',
+        height: '100%',
         borderRadius: 5,
     },
     profileDetailContainer: {
