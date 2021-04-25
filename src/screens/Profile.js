@@ -7,6 +7,8 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+//component
+import ChangePassword from '../components/ChangePassword';
 // helper
 import Token from '../helpers/tokenHandler';
 import * as API from '../helpers/network';
@@ -16,12 +18,17 @@ import IonIcons from '@expo/vector-icons/Ionicons';
 const Profile = ({ navigation }) => {
     const [userData, setUserData] = useState(null);
     const [billData, setBillData] = useState([]);
+    const [isShowChangePassword, setIsShowChangePassword] = useState(false);
 
     const getProfileData = async () => {
         const result = await API.get('me');
         if(result.success) {
             setUserData(result.data.data);
         }
+    }
+
+    const handleShowChangePassword = () => {
+        setIsShowChangePassword(!isShowChangePassword);
     }
 
     const getBillData = async () => {
@@ -57,6 +64,12 @@ const Profile = ({ navigation }) => {
                             <>
                                 <Text style={{fontSize: 20}}>{userData.full_name}</Text>
                                 <Text>{userData.email}</Text>
+                                <TouchableOpacity
+                                    onPress={handleShowChangePassword}
+                                    style={styles.changePasswordButton}
+                                >
+                                    <Text style={{color: 'gray'}}>Change Password</Text>
+                                </TouchableOpacity>
                             </>
                         }
                     </View>
@@ -70,34 +83,35 @@ const Profile = ({ navigation }) => {
             </View>
             <Text style={styles.title}>History</Text>
             {billData.length > 0
-                    ? (
-                        <ScrollView style={styles.historySection}>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                            <View style={styles.historyDetailContainer}>
-                                <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                            </View>
-                        </ScrollView>
-                        ) 
-                    : (
-                        <View style={styles.emptyHistorySection}>
-                            <Text>No History</Text>
+                ? (
+                    <ScrollView style={styles.historySection}>
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
                         </View>
-                    )
-                }
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                        </View>
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                        </View>
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                        </View>
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                        </View>
+                        <View style={styles.historyDetailContainer}>
+                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
+                        </View>
+                    </ScrollView>
+                    ) 
+                : (
+                    <View style={styles.emptyHistorySection}>
+                        <Text>No History</Text>
+                    </View>
+                )
+            }
+            {isShowChangePassword && <ChangePassword handleShowChangePassword={handleShowChangePassword} />}
         </SafeAreaView>
     )
 }
@@ -109,7 +123,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     profileSection: {
-        height: '20%',
+        height: '30%',
         padding: 10,
         borderRadius: 5,
         flexDirection: 'row',
@@ -156,6 +170,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 70,
         height: 40,
+        borderRadius: 5,
+    },
+    changePasswordButton: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+        height: 40,
+        borderWidth: 1,
         borderRadius: 5,
     },
     logoutText: {
