@@ -8,6 +8,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "description": "this is college project made by my team"
+    "description": "this is college project made by my team",
+    "android": {
+      "package": "com.splitbill"
+    }
   }
 }
