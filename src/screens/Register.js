@@ -64,7 +64,7 @@ const Register = ({ navigation }) => {
                 <Controller 
                     name="full_name"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             style={styles.input}
                             onChangeText={(value) => {
@@ -88,7 +88,7 @@ const Register = ({ navigation }) => {
                 <Controller 
                     name="email"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             style={styles.input}
                             onChangeText={(value) => {
@@ -111,7 +111,7 @@ const Register = ({ navigation }) => {
                 <Controller 
                     name="password"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             secureTextEntry={true}
                             style={styles.input}
@@ -135,7 +135,7 @@ const Register = ({ navigation }) => {
                 <Controller 
                     name="password_confirmation"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             secureTextEntry={true}
                             style={styles.input}

@@ -64,7 +64,7 @@ const Login = ({ navigation }) => {
                 <Controller 
                     name="email"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             style={styles.input}
                             onChangeText={(value) => {
@@ -87,7 +87,7 @@ const Login = ({ navigation }) => {
                 <Controller 
                     name="password"
                     control={control}
-                    render={({field:{ onChange, value }}) => (
+                    render={({ onChange, value }) => (
                         <TextInput
                             secureTextEntry={true}
                             style={styles.input}
@@ -118,7 +118,7 @@ const Login = ({ navigation }) => {
                         style={styles.button}
                         onPress={handleSubmit(onSubmit)}
                     >
-                        <Text>Login</Text>
+                        <Text style={{color: 'white'}}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>
