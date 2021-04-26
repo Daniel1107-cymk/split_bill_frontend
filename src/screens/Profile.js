@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+    ActivityIndicator,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 //component
 import ChangePassword from '../components/ChangePassword';
+import UpdateProfile from '../components/UpdateProfile';
 // helper
 import Token from '../helpers/tokenHandler';
 import * as API from '../helpers/network';
@@ -19,6 +21,7 @@ const Profile = ({ navigation }) => {
     const [userData, setUserData] = useState(null);
     const [billData, setBillData] = useState([]);
     const [isShowChangePassword, setIsShowChangePassword] = useState(false);
+    const [isShowUpdateProfile, setIsShowUpdateProfile] = useState(false);
 
     const getProfileData = async () => {
         const result = await API.get('me');
@@ -29,6 +32,10 @@ const Profile = ({ navigation }) => {
 
     const handleShowChangePassword = () => {
         setIsShowChangePassword(!isShowChangePassword);
+    }
+
+    const handleShowUpdateProfile = () => {
+        setIsShowUpdateProfile(!isShowUpdateProfile);
     }
 
     const getBillData = async () => {
@@ -59,10 +66,18 @@ const Profile = ({ navigation }) => {
                     <IonIcons name={"person-circle-outline"} color="#000" size={100} style={styles.profilePicture} />
                 </View>
                 <View style={styles.profileDetailContainer}>
-                    <View style={{width: '100%'}}>
-                        {userData !== null &&
-                            <>
-                                <Text style={{fontSize: 20}}>{userData.full_name}</Text>
+                    {userData !== null ?
+                        <>
+                            <View style={{width: '100%'}}>
+                                <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                    <Text style={{fontSize: 20}}>{userData.full_name}</Text>
+                                    <TouchableOpacity
+                                        onPress={handleShowUpdateProfile}
+                                        style={{marginLeft: 5}}
+                                    >
+                                        <IonIcons name={"create-outline"} color="#03befc" size={20} />
+                                    </TouchableOpacity>
+                                </View>
                                 <Text>{userData.email}</Text>
                                 <TouchableOpacity
                                     onPress={handleShowChangePassword}
@@ -70,15 +85,19 @@ const Profile = ({ navigation }) => {
                                 >
                                     <Text style={{color: 'gray'}}>Change Password</Text>
                                 </TouchableOpacity>
-                            </>
-                        }
-                    </View>
-                    <TouchableOpacity
-                        onPress={Logout}
-                        style={styles.logoutButton}
-                    >
-                        <Text style={styles.logoutText}>Logout</Text>
-                    </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity
+                                onPress={Logout}
+                                style={styles.logoutButton}
+                            >
+                                <Text style={styles.logoutText}>Logout</Text>
+                            </TouchableOpacity>
+                        </>
+                        : <View style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <ActivityIndicator size="large" color="#03befc" />
+                        </View>
+                        
+                    }
                 </View>
             </View>
             <Text style={styles.title}>History</Text>
@@ -112,6 +131,13 @@ const Profile = ({ navigation }) => {
                 )
             }
             {isShowChangePassword && <ChangePassword handleShowChangePassword={handleShowChangePassword} />}
+            {isShowUpdateProfile && 
+                <UpdateProfile 
+                    fullname={userData.full_name}
+                    handleShowUpdateProfile={handleShowUpdateProfile}
+                    getProfileData={getProfileData}
+                />
+            }
         </SafeAreaView>
     )
 }
