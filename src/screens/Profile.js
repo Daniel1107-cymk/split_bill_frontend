@@ -22,6 +22,7 @@ const Profile = ({ navigation }) => {
     const [billData, setBillData] = useState([]);
     const [isShowChangePassword, setIsShowChangePassword] = useState(false);
     const [isShowUpdateProfile, setIsShowUpdateProfile] = useState(false);
+    const [isBillDataLoaded, setIsBillDataLoaded] = useState(false);
 
     const getProfileData = async () => {
         const result = await API.get('me');
@@ -43,6 +44,7 @@ const Profile = ({ navigation }) => {
         if(result.success) {
             setBillData(result.data.data);
         }
+        setIsBillDataLoaded(true);
     }
 
     const Logout = async () => {
@@ -101,35 +103,33 @@ const Profile = ({ navigation }) => {
                 </View>
             </View>
             <Text style={styles.title}>History</Text>
-            {billData.length > 0
-                ? (
-                    <ScrollView style={styles.historySection}>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                        <View style={styles.historyDetailContainer}>
-                            <Text>Commodo et pariatur officia labore labore Lorem eiusmod ullamco adipisicing qui officia amet voluptate incididunt.</Text>
-                        </View>
-                    </ScrollView>
-                    ) 
-                : (
-                    <View style={styles.emptyHistorySection}>
-                        <Text>No History</Text>
-                    </View>
-                )
+            {!isBillDataLoaded
+                ? <View style={styles.emptyHistorySection}>
+                    <ActivityIndicator size="large" color="#03befc" />
+                </View>
+                :<>
+                    {billData.length > 0
+                        ? (
+                            <ScrollView style={styles.historySection}>
+                                {billData.map(bill => (
+                                    <View style={styles.historyDetailContainer} key={bill.code}>
+                                        <Text>Code : {bill.code}</Text>
+                                        <Text>Date : {bill.date}</Text>
+                                        <Text>Total : {bill.grand_total}</Text>
+                                        <Text>Splitted Total : {bill.splitted_value}</Text>
+                                    </View>
+                                ))}
+                            </ScrollView>
+                            ) 
+                        : (
+                            <View style={styles.emptyHistorySection}>
+                                <Text>No History</Text>
+                            </View>
+                        )
+                    }
+                </>
             }
+            
             {isShowChangePassword && <ChangePassword handleShowChangePassword={handleShowChangePassword} />}
             {isShowUpdateProfile && 
                 <UpdateProfile 
@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 10,
         marginVertical: 5,
-        backgroundColor: 'gray',
+        borderRadius: 5,
+        backgroundColor: 'rgba(128, 128, 128, 0.2)',
     },
     logoutButton: {
         backgroundColor: '#03befc',
