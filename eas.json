@@ -6,7 +6,7 @@
       },
       "preview": {
         "workflow": "managed",
-        "buildType": "apk"
+        "gradleCommand": ":app:assembleRelease"
       }
     }
   }
