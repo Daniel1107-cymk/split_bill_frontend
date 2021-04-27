@@ -5,8 +5,10 @@
         "workflow": "generic"
       },
       "preview": {
+        "distribution": "internal",
         "workflow": "managed",
-        "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleRelease",
+        "buildType": "apk"
       }
     }
   }
