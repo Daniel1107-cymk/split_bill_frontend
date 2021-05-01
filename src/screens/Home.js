@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
+        borderRadius: 5,
+        elevation: 2,
     },
     introductionContent: {
         flex: 1,
@@ -73,6 +75,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         paddingHorizontal: 10,
         backgroundColor: 'white',
+        borderRadius: 5,
+        elevation: 2,
     },
     instructionContent: {
         flex: 1,

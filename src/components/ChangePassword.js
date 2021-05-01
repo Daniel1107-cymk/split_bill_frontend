@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
         padding: 20,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        elevation: 5,
     },
     container: {
         justifyContent: "center",
