@@ -12,6 +12,7 @@ import {
 import TesseractOcr, { LANG_INDONESIAN, LEVEL_LINE, LEVEL_BLOCK, useEventListener } from 'react-native-tesseract-ocr';
 // component
 import Camera from '../components/Camera';
+import Result from '../components/Result';
 // helper
 import * as API from '../helpers/network';
 
@@ -132,13 +133,6 @@ const Split = () => {
                         />
                     </View>
                     <View style={styles.listSection}>
-                        {total !== 0 &&
-                            <View style={styles.listHeader}>
-                                <TouchableOpacity  style={[styles.button, {width: '30%', alignSelf: 'flex-end'}]} onPress={handleReset}>
-                                    <Text style={{color: 'white'}}>Reset</Text>
-                                </TouchableOpacity>
-                            </View>
-                        }
                         {personCount !== "" && total === 0 &&
                             <>
                                 {flag.isLoading
@@ -152,20 +146,18 @@ const Split = () => {
                                 }
                             </>
                         }
-                        {flag.calculateCompleted &&
-                            <View style={styles.resultContainer}>
-                                <Text style={{textAlign: 'center', fontSize: 20, fontWeight: '700', marginVertical: 5,}}>Result</Text>
-                                <Text style={styles.resultText}>Input Person : {personCount}</Text>
-                                <Text style={styles.resultText}>Total : {total}</Text>
-                                <Text style={styles.resultText}>Total Splitted : {(total / personCount).toFixed(0)}</Text>
-                            </View>
-                        }
-                        
                     </View>
                 </>
                 : <Camera
                     handleIsShowCamera={handleIsShowCamera}
                     handleTesseractOcr={handleTesseractOcr}
+                />
+            }
+            {flag.calculateCompleted &&
+                <Result 
+                    total={total}
+                    personCount={personCount}
+                    handleReset={handleReset}
                 />
             }
         </SafeAreaView>
@@ -182,6 +174,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: 2,
     },
     input: {
         width: "100%",
@@ -201,6 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: 2,
     },
     listHeader: {
         position: 'absolute',
@@ -227,15 +221,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: "#03befc",
     },
-    resultContainer: {
-        backgroundColor: 'rgba(128, 128, 128, 0.2)',
-        padding: 20,
-    },
-    resultText: {
-        fontWeight: '700',
-        fontSize: 16,
-        marginVertical: 5,
-    }
 })
 
 export default Split;
