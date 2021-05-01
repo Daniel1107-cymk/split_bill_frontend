@@ -110,7 +110,7 @@ const Profile = ({ navigation }) => {
                 :<>
                     {billData.length > 0
                         ? (
-                            <ScrollView style={styles.historySection}>
+                            <ScrollView style={styles.historySection} showsVerticalScrollIndicator={false}>
                                 {billData.map(bill => (
                                     <View style={styles.historyDetailContainer} key={bill.code}>
                                         <Text>Code : {bill.code}</Text>
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         alignItems: 'center',
+        elevation: 2,
     },
     profilePicture: {
         width: '100%',
@@ -179,16 +180,15 @@ const styles = StyleSheet.create({
     },
     historySection: {
         height: '80%',
-        paddingHorizontal: 10,
         borderRadius: 5,
-        backgroundColor: 'white',
     },
     historyDetailContainer: {
         height: 100,
         padding: 10,
         marginVertical: 5,
         borderRadius: 5,
-        backgroundColor: 'rgba(128, 128, 128, 0.2)',
+        backgroundColor: 'white',
+        elevation: 2,
     },
     logoutButton: {
         backgroundColor: '#03befc',
