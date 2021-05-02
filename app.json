@@ -5,12 +5,23 @@
     "name": "SplitBill",
     "slug": "SplitBill",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#FFF",
+      "resizeMode": "contain"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "description": "this is college project made by my team",
     "android": {
-      "package": "com.splitbill"
+      "package": "com.splitbill",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFF"
+      }
     }
   }
 }
