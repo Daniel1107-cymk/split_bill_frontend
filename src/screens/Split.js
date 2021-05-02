@@ -46,17 +46,17 @@ const Split = () => {
     const handleReset = () => {
         setPersonCount("");
         setTotal(0);
-        setFlag(prevFlag => ({
+        setFlag({
             isLoading: false,
             isShowCamera: false,
             calculateCompleted: false,
-        }));
+        });
     }
 
     const submitBill = async (data) => {
         let newData = {
             total_people: personCount,
-            grand_total: (data / personCount).toFixed(0),
+            grand_total: data,
         };
         const result = await API.post('bill', JSON.stringify(newData));
         if(result.success) {
