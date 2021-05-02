@@ -59,6 +59,7 @@ const Login = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
+            <View style={styles.upperLeft} />
             <View style={styles.container}>
                 <Text style={styles.title}>Sign In</Text>
                 <Controller 
@@ -122,6 +123,7 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <View style={styles.bottomRight} />
         </SafeAreaView>
     )
 }
@@ -172,7 +174,34 @@ const styles = StyleSheet.create({
     },
     textError: {
         color: "red",
-    }
+    },
+    upperLeft: {
+        width: 0,
+        height: 0,
+        backgroundColor: "transparent",
+        borderStyle: "solid",
+        borderRightWidth: 150,
+        borderTopWidth: 150,
+        borderRightColor: "transparent",
+        borderTopColor: "#03befc",
+        position: 'absolute',
+        zIndex: 99,
+    },
+    bottomRight: {
+        width: 0,
+        height: 0,
+        backgroundColor: "transparent",
+        borderStyle: "solid",
+        borderRightWidth: 150,
+        borderTopWidth: 150,
+        borderRightColor: "transparent",
+        borderTopColor: "#03befc",
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        zIndex: 99,
+        transform: [{ rotate: "180deg" }],
+    },
 })
 
 export default Login
