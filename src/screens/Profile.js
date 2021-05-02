@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     ActivityIndicator,
+    FlatList,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -23,6 +24,7 @@ const Profile = ({ navigation }) => {
     const [isShowChangePassword, setIsShowChangePassword] = useState(false);
     const [isShowUpdateProfile, setIsShowUpdateProfile] = useState(false);
     const [isBillDataLoaded, setIsBillDataLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const getProfileData = async () => {
         const result = await API.get('me');
@@ -40,11 +42,13 @@ const Profile = ({ navigation }) => {
     }
 
     const getBillData = async () => {
+        setIsLoading(true);
         const result = await API.get('bill');
         if(result.success) {
             setBillData(result.data.data);
         }
         setIsBillDataLoaded(true);
+        setIsLoading(false);
     }
 
     const Logout = async () => {
@@ -110,16 +114,22 @@ const Profile = ({ navigation }) => {
                 :<>
                     {billData.length > 0
                         ? (
-                            <ScrollView style={styles.historySection} showsVerticalScrollIndicator={false}>
-                                {billData.map(bill => (
-                                    <View style={styles.historyDetailContainer} key={bill.code}>
-                                        <Text>Code : {bill.code}</Text>
-                                        <Text>Date : {bill.date}</Text>
-                                        <Text>Total : {bill.grand_total}</Text>
-                                        <Text>Splitted Total : {bill.splitted_value}</Text>
+                            <FlatList 
+                                style={styles.historySection}
+                                data={billData}
+                                renderItem={({item}) => (
+                                    <View style={styles.historyDetailContainer}>
+                                        <Text>Code : {item.code}</Text>
+                                        <Text>Date : {item.date}</Text>
+                                        <Text>Total : {item.grand_total}</Text>
+                                        <Text>Splitted Total : {item.splitted_value}</Text>
                                     </View>
-                                ))}
-                            </ScrollView>
+                                )}
+                                keyExtractor={item => item.code}
+                                showsVerticalScrollIndicator={false}
+                                refreshing={isLoading}
+                                onRefresh={getBillData}
+                            />
                             ) 
                         : (
                             <View style={styles.emptyHistorySection}>
